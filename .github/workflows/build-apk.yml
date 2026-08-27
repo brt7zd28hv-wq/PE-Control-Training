@@ -1,4 +1,4 @@
-name: Build PE Control Training APK
+name: Build PE Control Training TV V2 APK
 
 on:
   workflow_dispatch:
@@ -11,11 +11,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Extract Android project
+      - name: Extract V2 Android project
         run: |
-          unzip -q PE-Control-Training-Android-V1.zip
+          unzip -q PE-Control-Training-V2.zip
           echo "Extracted project:"
-          find PEControlTraining -maxdepth 3 -type f | head -50
+          find PEControlTrainingV2 -maxdepth 4 -type f | sort
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -36,12 +36,17 @@ jobs:
         with:
           gradle-version: '8.11.1'
 
-      - name: Build APK
-        working-directory: PEControlTraining
+      - name: Build V2 APK
+        working-directory: PEControlTrainingV2
         run: gradle assembleDebug --no-daemon
 
-      - name: Upload APK
+      - name: Check APK
+        run: |
+          ls -lh PEControlTrainingV2/app/build/outputs/apk/debug/
+          file PEControlTrainingV2/app/build/outputs/apk/debug/*.apk
+
+      - name: Upload V2 APK
         uses: actions/upload-artifact@v4
         with:
-          name: PE-Control-Training-APK
-          path: PEControlTraining/app/build/outputs/apk/debug/*.apk
+          name: PE-Control-Training-TV-V2-APK
+          path: PEControlTrainingV2/app/build/outputs/apk/debug/*.apk
