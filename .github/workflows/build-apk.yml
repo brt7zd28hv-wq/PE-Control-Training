@@ -15,7 +15,7 @@ jobs:
         run: |
           unzip -q PE-Control-Training-Android-V1.zip
           echo "Extracted project:"
-          find PE-Control-Training -maxdepth 3 -type f | head -50
+          find PEControlTraining -maxdepth 3 -type f | head -50
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -37,11 +37,11 @@ jobs:
           gradle-version: '8.11.1'
 
       - name: Build APK
-        working-directory: PE-Control-Training
+        working-directory: PEControlTraining
         run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: PE-Control-Training-APK
-          path: PE-Control-Training/app/build/outputs/apk/debug/*.apk
+          path: PEControlTraining/app/build/outputs/apk/debug/*.apk
